@@ -5,6 +5,9 @@ from tkinter import *
 import urllib.request
 import json
 import requests
+#import PIL.Image
+#import PIL.ImageTk
+from PIL import Image, ImageTk
 
 import time
 #def displayTime():
@@ -59,13 +62,23 @@ def main():
 	def tick():
 		time1 = ''
 		# get the current local time from the PC
-		nowHour = int(time.strftime('%H'))
-		nowMin = time.strftime('%M')
+		nowHour = time.strftime('%H')
+		nowHourInt = int(nowHour)
 
-		if(nowHour>12):
-			time2 = str(nowHour - 12) + ":" + nowMin + "PM"
-		else:
-			time2 = str(nowHour) + ":" + nowMin + "AM"
+		nowMin = time.strftime('%M')
+		period = "AM"
+
+		if(nowHourInt>12):
+			#time2 = str(nowHour - 12) + ":" + nowMin + "PM"
+			nowHour = nowHourInt - 12
+			period = "PM"
+
+		#else:
+			#time2 = str(nowHour) + ":" + nowMin + "AM"
+		elif (nowHourInt == 0):
+			nowHour = '12'
+
+		time2 = nowHour + ":" + nowMin + period
 		# if time string has changed, update it
 
 		if (time2 != time1):
@@ -96,27 +109,51 @@ def main():
 
 
 	#Default is clear-day
-	iconFilePath = ''#
+	iconFilePath = 'images/clear.jpg'
 
-	if (icon == 'rain'): #
-		iconFilePath = ''
-	elif (icon == 'snow' or icon == 'sleet'): #
-		iconFilePath = ''
-	elif (icon == 'wind'): #
-		iconFilePath = ''
-	elif (icon == 'fog' or icon == 'cloudy' or icon == 'partly-cloudy-night'): #
-		iconFilePath = ''
-	elif (icon == 'partly-cloudy-day'):#
-		iconFilePath = ''
+	if (icon == 'rain'): 
+		iconFilePath = 'images/rain.jpg'
+	
+	elif (icon == 'snow' or icon == 'sleet'): 
+		iconFilePath = 'images/snow.jpg'
+	
+	elif (icon == 'wind'): 
+		iconFilePath = 'images/wind.jpg'
+	
+	elif (icon == 'fog' or icon == 'cloudy' or icon == 'partly-cloudy-night'): 
+		iconFilePath = 'images/cloudy.jpg'
+
+	elif (icon == 'partly-cloudy-day'):
+		iconFilePath = 'images/partly-cloudy-day.jpg'
+
 	elif (icon == 'clear-night'): #
-		iconFilePath = ''
-
+		iconFilePath = 'images/clearnight.jpg'
 
 	# insert pic
-	iconImage = PhotoImage(file = iconFilePath)
 
-	iconPic = Label(root, image = iconImage)
-	iconPic.place(relx=1.0, x= -25go0, y=100, anchor=NE)
+
+	#iconImage = Image.open(iconFilePath)
+	#iconImage.thumbnail((50,50))
+
+
+
+	iconImage = ImageTk.PhotoImage(file = iconFilePath)
+
+	#iconImage = ImageTk.PhotoImage(file = iconFilePath)
+	#iconImage = iconImageRaw.subsample(2,2)
+
+	#iconImageRaw = Image.open(iconFilePath)
+	#iconImageRaw.resize((50,10),Image.ANTIALIAS)
+
+	#iconImage = ImageTk.PhotoImage(iconImageRaw)
+	#iconImage.zoom(1,1)
+
+	#im = PIL.Image.open(iconFilePath)
+	#iconImage = PIL.ImageTk.PhotoImage(im)
+
+	iconPic = Label(root, image = iconImage, borderwidth = 0)
+	#iconPic.image = iconImage
+	iconPic.place(relx=1.0, x= -400, y=0, anchor=NE)
 
 	root.mainloop()
 main()
