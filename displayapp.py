@@ -16,15 +16,16 @@ def weather():
 
     forecast=forecastio.load_forecast(api_key, latitude, longitude)
 
-    current_Weather=forecast.currently()
+    current_Weather = forecast.currently()
     daily_Summary = forecast.daily()
 
     summary2 = daily_Summary.summary
 
     summary1 = current_Weather.summary
+    icon = current_Weather.icon
     temperature = str(current_Weather.temperature) + '\u00b0F'
 
-    return (temperature, summary1, summary2)
+    return (temperature, summary1, summary2, icon)
 
 
 def main():
@@ -40,6 +41,7 @@ def main():
     temp = TempSum[0]
     summary=TempSum[1]
     summary2=TempSum[2]
+    icon = TempSum[3]
 
     current_temperature = Label(root, text = temp, font=('Pacifico', 72), background='black', fg = "white")
     current_temperature.place(relx = 1.0, x = -100 , y = 100, anchor= NE)
@@ -49,6 +51,36 @@ def main():
 
     current_summary = Label(root, text = summary2, font=('Pacifico', 15), background='black', fg = "white")
     current_summary.place(relx = 1.0, x = -100 , y = 260, anchor= NE)
+
+    #default = clear day
+    iconFilepath = ""
+
+    if(icon == 'rain'):
+        iconFilepath = ""
+    elif(icon == 'snow' or icon == 'sleet'):
+        iconFilepath = ""
+    elif(icon == "wind"):
+        iconFilepath = ""
+    elif(icon == "fog" or icon == "cloudy" or icon == "partly-cloudy-night"):
+        iconFilepath = ""
+    elif(icon == "partly-cloudy-day"):
+        iconFilepath = ""
+    elif(icon == "clear night"):
+        iconFilepath = ""
+
+
+#insert picture
+
+    iconImage=PhotoImage(file= iconFilepath)
+    iconPic = Label(root, image = iconImage)
+    iconPic.place(relx = 1.0, x = -250 , y = 125, anchor= NE)
+
+
+
+    #iconPic = Label(root, text = summary2, font=('Pacifico', 15), background='black', fg = "white")
+    #iconPic.place(relx = 1.0, x = -100 , y = 260, anchor= NE)
+
+
 
     def tick():
         time1 = ''
