@@ -53,25 +53,25 @@ def main():
     current_summary.place(relx = 1.0, x = -100 , y = 260, anchor= NE)
 
     #default = clear day
-    iconFilepath = ""
+    iconFilepath = '/clear.png'
 
     if(icon == 'rain'):
-        iconFilepath = ""
+        iconFilepath = ''
     elif(icon == 'snow' or icon == 'sleet'):
-        iconFilepath = ""
+        iconFilepath = ''
     elif(icon == "wind"):
-        iconFilepath = ""
+        iconFilepath = ''
     elif(icon == "fog" or icon == "cloudy" or icon == "partly-cloudy-night"):
-        iconFilepath = ""
+        iconFilepath = ''
     elif(icon == "partly-cloudy-day"):
-        iconFilepath = ""
+        iconFilepath = ''
     elif(icon == "clear night"):
-        iconFilepath = ""
+        iconFilepath = ''
 
 
 #insert picture
 
-    iconImage=PhotoImage(file= iconFilepath)
+    iconImage=PhotoImage(file = iconFilepath)
     iconPic = Label(root, image = iconImage)
     iconPic.place(relx = 1.0, x = -250 , y = 125, anchor= NE)
 
