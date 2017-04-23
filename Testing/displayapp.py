@@ -36,10 +36,12 @@ def getWeather():
 	currentSummary = result['currently']['summary']
 	dailySummary = result['daily']['summary']
 
+	icon = result['currently']['icon']
+
 	#print('long: ' + longitude + ' and lat: ' + latitude)
 	#print(currentTemp)
 
-	return (currentTemp,currentSummary,dailySummary)
+	return (currentTemp,currentSummary,dailySummary,icon)
 
 	
 #getWeather()
@@ -81,6 +83,7 @@ def main():
 	currentTemp = tempSum[0]
 	currentSummary = tempSum[1]
 	dailySummary = tempSum[2]
+	icon = tempSum[3]
 
 	tempLabel = Label(root, text = currentTemp, font=('Pacifico', 72), background='black', fg = "white")
 	tempLabel.place(relx=1.0, x= -100, y=100, anchor=NE)
@@ -92,6 +95,28 @@ def main():
 	dailySummaryLabel.place(relx=1.0, x= -100, y=260, anchor=NE)
 
 
+	#Default is clear-day
+	iconFilePath = ''#
+
+	if (icon == 'rain'): #
+		iconFilePath = ''
+	elif (icon == 'snow' or icon == 'sleet'): #
+		iconFilePath = ''
+	elif (icon == 'wind'): #
+		iconFilePath = ''
+	elif (icon == 'fog' or icon == 'cloudy' or icon == 'partly-cloudy-night'): #
+		iconFilePath = ''
+	elif (icon == 'partly-cloudy-day'):#
+		iconFilePath = ''
+	elif (icon == 'clear-night'): #
+		iconFilePath = ''
+
+
+	# insert pic
+	iconImage = PhotoImage(file = iconFilePath)
+
+	iconPic = Label(root, image = iconImage)
+	iconPic.place(relx=1.0, x= -25go0, y=100, anchor=NE)
 
 	root.mainloop()
 main()
