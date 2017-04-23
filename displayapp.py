@@ -4,6 +4,9 @@ import time
 import requests
 import json
 
+import PIL.Image
+import PIL.ImageTk
+
 def weather():
 
     api_key="cf29d83127cfdf7b9baadf86cc013b60" #dark Skies API key call
@@ -53,26 +56,34 @@ def main():
     current_summary.place(relx = 1.0, x = -100 , y = 260, anchor= NE)
 
     #default = clear day
-    iconFilepath = '/clear.png'
+    iconFilepath = 'photos/clear.png'
 
     if(icon == 'rain'):
-        iconFilepath = ''
+        iconFilepath = 'photos/rain.png'
+
     elif(icon == 'snow' or icon == 'sleet'):
-        iconFilepath = ''
+        iconFilepath = 'photos/snow.png'
+
     elif(icon == "wind"):
-        iconFilepath = ''
+        iconFilepath = 'photos/wind.png'
+
     elif(icon == "fog" or icon == "cloudy" or icon == "partly-cloudy-night"):
-        iconFilepath = ''
+        iconFilepath = 'photos/cloudy.png'
+
     elif(icon == "partly-cloudy-day"):
-        iconFilepath = ''
+        iconFilepath = 'photos/partly-cloudy-day.png'
+
     elif(icon == "clear night"):
-        iconFilepath = ''
+        iconFilepath = 'photos/clearnight.png'
 
 
 #insert picture
 
-    iconImage=PhotoImage(file = iconFilepath)
-    iconPic = Label(root, image = iconImage)
+    im = PIL.Image.open(iconFilepath)
+    photo = PIL.ImageTk.PhotoImage(im)
+
+    iconPic = Label(root, image = photo)
+    iconPic.image = photo
     iconPic.place(relx = 1.0, x = -250 , y = 125, anchor= NE)
 
 
@@ -92,7 +103,11 @@ def main():
         if(nowHour>12):
             time2 = str(nowHour-12) + ":" + nowMin + "PM"
         else:
-            time2 = str(nowHour) + ":" + nowMin + "AM"
+            if(nowHour == 0):
+                nowHour = 12
+                time2 = str(nowHour) + ":" + nowMin + "AM"
+            else:
+                time2 = str(nowHour) + ":" + nowMin + "AM"
         # if time string has changed, update it
 
         if (time2 != time1):
